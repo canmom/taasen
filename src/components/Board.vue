@@ -34,6 +34,12 @@ export default {
   components: {
     Tile,
     Piece
+  },
+  methods: {
+    movePiece: function (pieceIndex, destination) {
+      this.pieces[pieceIndex].loc = destination
+      this.pieces.starting = false
+    }
   }
 }
 </script>
