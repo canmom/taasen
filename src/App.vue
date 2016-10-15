@@ -2,7 +2,7 @@
   <div id="app">
     <header>
       <h1>Taasen</h1>
-      <p>The game of Tryslmaistan chess</p>
+      <p>the game of Tryslmaistan chess</p>
     </header>
     <board></board>
   </div>
