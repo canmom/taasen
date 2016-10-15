@@ -1,21 +1,23 @@
 <template>
 <div class="board">
   <svg width="600" height="600" viewBox="0 0 4 4">
-    <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="radius" :t="tile.t"></tile>
+    <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
+    <piece :x="tiles[1].x" :y="tiles[1].y" :r="pieceRadius" piece="thaum" faction="red"></piece>
   </svg>
 </div>
 </template>
 
 <script>
 import Tile from './Tile'
+import Piece from './Piece'
 
 export default {
   data: function () {
-    var radius = 1 / Math.sqrt(3)
+    var tileRadius = 1 / Math.sqrt(3)
     var bX = 0.5           // x baseline
     var bY = 3.3           // y baseline
     var sX = 1             // x step
-    var sY = -radius * 1.5 // y step
+    var sY = -tileRadius * 1.5 // y step
 
     return {
       tiles: [
@@ -36,11 +38,13 @@ export default {
         {x: bX + 1.5 * sX, y: bY + 7 * sY / 3, u: -1, t: 'desert1'},
         {x: bX + 1.5 * sX, y: bY + 3 * sY, u: 1, t: 'void'}
       ],
-      radius: radius
+      tileRadius: tileRadius,
+      pieceRadius: 0.2 * tileRadius
     }
   },
   components: {
-    Tile
+    Tile,
+    Piece
   }
 }
 </script>
