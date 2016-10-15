@@ -2,8 +2,8 @@
 <div class="board">
   <svg width="600" height="600" viewBox="0 0 4 4">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
-    <piece :x="tiles[1].x" :y="tiles[1].y" :r="pieceRadius" piece="thaum" faction="red"></piece>
-    <piece :x="tiles[2].x" :y="tiles[2].y" :r="pieceRadius" piece="paupil" faction="red"></piece>
+    <piece :x="tiles[1].x" :y="tiles[1].y" :r="pieceRadius" piece="thaum" faction="green"></piece>
+    <piece :x="tiles[2].x" :y="tiles[2].y" :r="pieceRadius" piece="paupil" faction="blue"></piece>
     <piece :x="tiles[5].x" :y="tiles[5].y" :r="pieceRadius" piece="sciane" faction="red"></piece>
   </svg>
 </div>

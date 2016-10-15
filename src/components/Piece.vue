@@ -77,4 +77,13 @@ export default {
   stroke:#FF4452;
 }
 
+.blue {
+  fill:#00757C;
+  stroke:#23F1FF;
+}
+
+.green {
+  fill: #306000;
+  stroke: #64BC0D;
+}
 </style>
