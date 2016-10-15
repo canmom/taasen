@@ -1,20 +1,39 @@
 <template>
-  <polygon class="tile" :points="points"/>
+  <polygon :class="elementClass" :points="points"/>
 </template>
 
 <script>
 export default {
-  props: ['x', 'y', 'up', 'r'],
+  props: ['x', 'y', 'up', 'r', 'type'],
   computed: {
     points: function () {
       return `${this.x},${this.y - this.up * this.r} ${this.x + this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r} ${this.x - this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r}`
+    },
+    elementClass: function () {
+      return `tile ${this.type}`
     }
   }
 }
 </script>
 
 <style>
-  .tile {
-    fill:black;
+  .void {
+    fill: #5F5F5F;
+  }
+
+  .desert1 {
+    fill: #FAD69D;
+  }
+
+  .desert2 {
+    fill: #FFFCBF;
+  }
+
+  .grass {
+    fill: #A4FF6A;
+  }
+
+  .sea {
+    fill: #6388FF;
   }
 </style>
