@@ -1,7 +1,7 @@
 <template>
 <div class="board">
   <svg width="600" height="600" viewBox="0 0 4 4">
-    <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="radius" :type="tile.t"></tile>
+    <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="radius" :t="tile.t"></tile>
   </svg>
 </div>
 </template>
