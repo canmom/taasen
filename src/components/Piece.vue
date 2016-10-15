@@ -1,8 +1,12 @@
 <template>
 <g :class='elClass' >
-  <circle class='outline' :cx='x' :cy='y' :r='r*1.3' />
-  <circle class='core' :cx='x' :cy='y' :r='r' :style='strokeStyle'/>
-  <triangle :v-if='thaum' :x='x' :y='y' :r='r*.85' :up='1' :style='strokeStyle'></triangle>
+  <circle class='outline' :cx='x' :cy='y' :r='coreRadius+strokeWidth' />
+  <line v-if='isSciane' :x1='x-scianeArmLength-strokeWidth/2' :x2='x+scianeArmLength+strokeWidth/2' :y1='y' :y2='y' :style='outlineStrokeStyle'/>
+  <line v-if='isSciane' :y1='y-scianeArmLength-strokeWidth/2' :y2='y+scianeArmLength+strokeWidth/2' :x1='x' :x2='x' :style='outlineStrokeStyle'/>
+  <line v-if='isSciane' :x1='x-scianeArmLength' :x2='x+scianeArmLength' :y1='y' :y2='y' :style='strokeStyle'/>
+  <line v-if='isSciane' :y1='y-scianeArmLength' :y2='y+scianeArmLength' :x1='x' :x2='x' :style='strokeStyle'/>
+  <circle class='core' :cx='x' :cy='y' :r='coreRadius' :style='strokeStyle'/>
+  <triangle v-if='isThaum' :x='x' :y='y' :r='r*.85' :up='1' :style='strokeStyle'></triangle>
 </g>
 </template>
 
@@ -29,13 +33,31 @@ export default {
     elClass: function () {
       return `piece ${this.piece} ${this.faction}`
     },
+    strokeWidth: function () {
+      return this.r * 0.3
+    },
     strokeStyle: function () {
       return {
-        'stroke-width': this.r * 0.3
+        'stroke-width': this.strokeWidth
       }
     },
-    thaum: function () {
+    outlineStrokeStyle: function () {
+      return {
+        stroke: 'black',
+        'stroke-width': this.strokeWidth * 2
+      }
+    },
+    coreRadius: function () {
+      return {thaum: 1, sciane: 0.6, paupil: 0.8}[this.piece] * this.r
+    },
+    scianeArmLength: function () {
+      return this.r * 1.1
+    },
+    isThaum: function () {
       return this.piece === 'thaum'
+    },
+    isSciane: function () {
+      return this.piece === 'sciane'
     }
   },
   components: {
@@ -55,7 +77,4 @@ export default {
   stroke:#FF4452;
 }
 
-.blue {
-
-}
 </style>
