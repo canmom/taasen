@@ -12,6 +12,8 @@
 
 <script>
 import Triangle from './Triangle'
+import {tiles} from './Tiles'
+import trianglePoints from './TrianglePoints'
 
 export default {
   props: {
@@ -25,11 +27,31 @@ export default {
         return new Set(['red', 'green', 'blue']).has(value)
       }
     },
-    x: Number,
-    y: Number,
-    r: Number
+    loc: {
+      validator: function (value) {
+        return typeof value === 'string' && value.length === 2
+      }
+    },
+    r: Number,
+    starting: Boolean
   },
   computed: {
+    // offset if it's on the starting tile
+    offset: function () {
+      if (this.starting) {
+        var points = trianglePoints(0, 0, this.r * 2, 1)
+        var directions = {thaum: 0, sciane: 1, paupil: 2}
+        return points[directions[this.piece]]
+      } else {
+        return {x: 0, y: 0}
+      }
+    },
+    x: function () {
+      return tiles[this.loc].x + this.offset.x
+    },
+    y: function () {
+      return tiles[this.loc].y + this.offset.y
+    },
     elClass: function () {
       return `piece ${this.piece} ${this.faction}`
     },
