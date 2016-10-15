@@ -1,8 +1,10 @@
-<template>
-  <polygon :class='elementClass' :points='points'/>
+<template>  
+  <triangle :class='elClass' :x='x' :y='y' :up='up' :r='r'></triangle>
 </template>
 
 <script>
+import Triangle from './Triangle'
+
 export default {
   props: {
     x: Number,
@@ -20,12 +22,12 @@ export default {
     }
   },
   computed: {
-    points: function () {
-      return `${this.x},${this.y - this.up * this.r} ${this.x + this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r} ${this.x - this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r}`
-    },
-    elementClass: function () {
+    elClass: function () {
       return `tile ${this.t}`
     }
+  },
+  components: {
+    Triangle
   }
 }
 </script>
