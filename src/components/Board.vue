@@ -2,43 +2,32 @@
 <div class="board">
   <svg width="600" height="600" viewBox="0 0 4 4">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
-    <piece :x="tiles[1].x" :y="tiles[1].y" :r="pieceRadius" piece="thaum" faction="green"></piece>
-    <piece :x="tiles[2].x" :y="tiles[2].y" :r="pieceRadius" piece="paupil" faction="blue"></piece>
-    <piece :x="tiles[5].x" :y="tiles[5].y" :r="pieceRadius" piece="sciane" faction="red"></piece>
+    <piece :x="tiles['a3'].x" :y="tiles['a3'].y" :r="pieceRadius" piece="thaum" faction="green"></piece>
+    <piece :x="tiles['a4'].x" :y="tiles['a4'].y" :r="pieceRadius" piece="paupil" faction="blue"></piece>
+    <piece :x="tiles['a5'].x" :y="tiles['a5'].y" :r="pieceRadius" piece="sciane" faction="red"></piece>
   </svg>
 </div>
 </template>
 
 <script>
 import Tile from './Tile'
+import {tiles, tileRadius} from './Tiles'
 import Piece from './Piece'
 
 export default {
   data: function () {
-    var tileRadius = 1 / Math.sqrt(3)
-    var bX = 0.5           // x baseline
-    var bY = 3.3           // y baseline
-    var sX = 1             // x step
-    var sY = -tileRadius * 1.5 // y step
-
     return {
-      tiles: [
-        {x: bX, y: bY, u: 1, t: 'void'},
-        {x: bX + sX, y: bY, u: 1, t: 'desert2'},
-        {x: bX + 2 * sX, y: bY, u: 1, t: 'desert2'},
-        {x: bX + 3 * sX, y: bY, u: 1, t: 'void'},
-        {x: bX + 0.5 * sX, y: bY + sY / 3, u: -1, t: 'desert1'},
-        {x: bX + 1.5 * sX, y: bY + sY / 3, u: -1, t: 'grass'},
-        {x: bX + 2.5 * sX, y: bY + sY / 3, u: -1, t: 'desert1'},
-        {x: bX + 0.5 * sX, y: bY + sY, u: 1, t: 'desert2'},
-        {x: bX + 1.5 * sX, y: bY + sY, u: 1, t: 'sea'},
-        {x: bX + 2.5 * sX, y: bY + sY, u: 1, t: 'desert2'},
-        {x: bX + sX, y: bY + 4 * sY / 3, u: -1, t: 'grass'},
-        {x: bX + 2 * sX, y: bY + 4 * sY / 3, u: -1, t: 'grass'},
-        {x: bX + sX, y: bY + 2 * sY, u: 1, t: 'desert2'},
-        {x: bX + 2 * sX, y: bY + 2 * sY, u: 1, t: 'desert2'},
-        {x: bX + 1.5 * sX, y: bY + 7 * sY / 3, u: -1, t: 'desert1'},
-        {x: bX + 1.5 * sX, y: bY + 3 * sY, u: 1, t: 'void'}
+      tiles: tiles,
+      pieces: [
+        {faction: 'red', piece: 'thaum', loc: 'a1'},
+        {faction: 'red', piece: 'sciane', loc: 'a1'},
+        {faction: 'red', piece: 'paupil', loc: 'a1'},
+        {faction: 'green', piece: 'thaum', loc: 'a7'},
+        {faction: 'green', piece: 'sciane', loc: 'a7'},
+        {faction: 'green', piece: 'paupil', loc: 'a7'},
+        {faction: 'blue', piece: 'thaum', loc: 'd4'},
+        {faction: 'blue', piece: 'sciane', loc: 'd4'},
+        {faction: 'blue', piece: 'paupil', loc: 'd4'}
       ],
       tileRadius: tileRadius,
       pieceRadius: 0.2 * tileRadius
