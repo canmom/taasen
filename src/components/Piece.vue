@@ -1,6 +1,6 @@
 <template>
-<g :class='elClass' >
-  <circle class='outline' :cx='x' :cy='y' :r='coreRadius+strokeWidth' />
+<g :class='elClass' v-on:click="$emit('select')">
+  <circle :class="selected ? 'selected' : 'outline'" :cx='x' :cy='y' :r='coreRadius+strokeWidth' />
   <line v-if='isSciane' :x1='x-scianeArmLength-strokeWidth/2' :x2='x+scianeArmLength+strokeWidth/2' :y1='y' :y2='y' :style='outlineStrokeStyle'/>
   <line v-if='isSciane' :y1='y-scianeArmLength-strokeWidth/2' :y2='y+scianeArmLength+strokeWidth/2' :x1='x' :x2='x' :style='outlineStrokeStyle'/>
   <line v-if='isSciane' :x1='x-scianeArmLength' :x2='x+scianeArmLength' :y1='y' :y2='y' :style='strokeStyle'/>
@@ -33,7 +33,8 @@ export default {
       }
     },
     r: Number,
-    starting: Boolean
+    starting: Boolean,
+    selected: Boolean
   },
   computed: {
     // offset if it's on the starting tile
@@ -65,7 +66,7 @@ export default {
     },
     outlineStrokeStyle: function () {
       return {
-        stroke: 'black',
+        stroke: this.selected ? 'yellow' : 'black',
         'stroke-width': this.strokeWidth * 2
       }
     },
@@ -91,6 +92,11 @@ export default {
 <style>
 .outline {
   fill: black;
+  stroke: none;
+}
+
+.selected {
+  fill: yellow;
   stroke: none;
 }
 
