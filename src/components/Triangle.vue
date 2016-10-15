@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import pointsFunction from './TrianglePoints'
+
 export default {
   props: {
     x: Number,
@@ -16,7 +18,9 @@ export default {
   },
   computed: {
     points: function () {
-      return `${this.x},${this.y - this.up * this.r} ${this.x + this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r} ${this.x - this.r * Math.sqrt(3) / 2},${this.y + this.up * 0.5 * this.r}`
+      var p = pointsFunction(this.x, this.y, this.r, this.up)
+
+      return `${p[0].x},${p[0].y} ${p[1].x},${p[1].y} ${p[2].x},${p[2].y}`
     }
   }
 }
