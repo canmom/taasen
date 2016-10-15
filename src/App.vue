@@ -21,7 +21,7 @@ export default {
 <style>
 html {
   height: 100%;
-
+  min-height: 600px;
 }
 
 body {
