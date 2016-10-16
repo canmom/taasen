@@ -32,5 +32,8 @@ export default {
 <style>
 .destination {
   fill: rgba(255,255,0,0.5);
+  stroke: black;
+  stroke-width: 0.02;
+  stroke-linejoin: round;
 }
 </style>
