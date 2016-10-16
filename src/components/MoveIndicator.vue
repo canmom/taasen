@@ -2,7 +2,8 @@
 <div class="indicator">
   <p>
     <svg width="50" height="50" viewBox="0 0 1 1"> 
-      <rect class="indicator-box" x="0.1" y="0.1" width="0.8" height="0.8" rx="0.3" ry="0.3" :style='style'/>
+      <triangle :x="0.5" :y="0.41" :r="0.58" :up="-1" :style='style'></triangle>
+      <triangle :x="0.5" :y="0.4" :r="0.3" :up="-1" :style='styleInner'></triangle>
     </svg>
     <strong>{{faction}}</strong> to move
   </p>
@@ -10,11 +11,18 @@
 </template>
 
 <script>
+import Triangle from './Triangle'
+
 export default {
   computed: {
     style: function () {
       return {
         fill: this.faction === 'red' ? '#FF4452' : '#64BC0D'
+      }
+    },
+    styleInner: function () {
+      return {
+        fill: this.faction === 'red' ? '#820A13' : '#306000'
       }
     }
   },
@@ -24,6 +32,9 @@ export default {
         return value === 'red' || value === 'green'
       }
     }
+  },
+  components: {
+    Triangle
   }
 }
 </script>
@@ -31,11 +42,11 @@ export default {
 <style>
 .indicator {
   font-family: "Linux Biolinum", sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   width: max-content;
   position: absolute;
-  right: 80px;
-  top: 20px;
+  left: 53%;
+  top: 40px;
 }
 .indicator p {
   margin: 0;
@@ -44,10 +55,6 @@ export default {
   display: inline-block;
   margin-bottom: -18px;
   margin-right: 5px;
-}
-.indicator-box {
-  stroke: black;
-  stroke-width: 0.1;
 }
 .indicator text {
 

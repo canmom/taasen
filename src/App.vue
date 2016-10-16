@@ -19,11 +19,6 @@ export default {
 </script>
 
 <style>
-html {
-  height: 100%;
-  min-height: 600px;
-}
-
 body {
   background: linear-gradient( to bottom, #96F6F6, #117985);
   background-repeat: no-repeat;

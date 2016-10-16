@@ -1,7 +1,7 @@
 <template>
 <div class="game">
   <move-indicator :faction="toMove"></move-indicator>
-  <svg class="board" width="600" height="600" viewBox="0 0 4 4">
+  <svg class="board" viewBox="0 0 4 3.5">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
     <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
     <piece v-for='(piece, pieceIndex) in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :selected='piece.selected' v-on:select='beginMoving(pieceIndex)'></piece>
@@ -86,7 +86,8 @@ export default {
   width: 100%;
 }
 .board {
-  width: 600;
+  width: 45%;
+  height: 39.375%;
   margin: 0 auto;
   display: block;
 }
