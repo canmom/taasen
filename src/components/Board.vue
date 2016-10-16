@@ -16,21 +16,30 @@ import Piece from './Piece'
 import DestinationOverlay from './DestinationOverlay'
 import MoveIndicator from './MoveIndicator'
 
+class GamePiece {
+  constructor (faction, piece) {
+    this.faction = faction
+    this.piece = piece
+    this.loc = {red: 'a1', green: 'a7', blue: 'd4'}[faction]
+    this.starting = true
+    this.selected = false
+    this.pushed = false
+  }
+}
+
+var pieces = [];
+
+['red', 'green', 'blue'].map(function (faction) {
+  ['thaum', 'sciane', 'paupil'].map(function (piece) {
+    pieces.push(new GamePiece(faction, piece))
+  })
+})
+
 export default {
   data: function () {
     return {
       tiles: tiles,
-      pieces: [
-        {faction: 'red', piece: 'thaum', loc: 'a1', starting: true, selected: false, pushed: false},
-        {faction: 'red', piece: 'sciane', loc: 'a1', starting: true, selected: false, pushed: false},
-        {faction: 'red', piece: 'paupil', loc: 'a1', starting: true, selected: false, pushed: false},
-        {faction: 'green', piece: 'thaum', loc: 'a7', starting: true, selected: false, pushed: false},
-        {faction: 'green', piece: 'sciane', loc: 'a7', starting: true, selected: false, pushed: false},
-        {faction: 'green', piece: 'paupil', loc: 'a7', starting: true, selected: false, pushed: false},
-        {faction: 'blue', piece: 'thaum', loc: 'd4', starting: true, selected: false, pushed: false},
-        {faction: 'blue', piece: 'sciane', loc: 'd4', starting: true, selected: false, pushed: false},
-        {faction: 'blue', piece: 'paupil', loc: 'd4', starting: true, selected: false, pushed: false}
-      ],
+      pieces: pieces,
       tileRadius: tileRadius,
       pieceRadius: 0.2 * tileRadius,
       destinations: {},
