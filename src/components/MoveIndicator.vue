@@ -13,6 +13,10 @@
 <script>
 import Triangle from './Triangle'
 
+var validator = function (value) {
+  return value === 'red' || value === 'green'
+}
+
 export default {
   computed: {
     style: function () {
@@ -28,9 +32,10 @@ export default {
   },
   props: {
     faction: {
-      validator: function (value) {
-        return value === 'red' || value === 'green'
-      }
+      validator: validator
+    },
+    pushed: {
+      validator: validator
     }
   },
   components: {
