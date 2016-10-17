@@ -1,32 +1,59 @@
 <template>
-<div class="indicator">
+<div id="indicator">
   <p>
     <svg width="50" height="50" viewBox="0 0 1 1"> 
-      <triangle :x="0.5" :y="0.41" :r="0.58" :up="-1" :style='style'></triangle>
-      <triangle :x="0.5" :y="0.4" :r="0.3" :up="-1" :style='styleInner'></triangle>
+      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
+      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
     </svg>
-    <strong>{{faction}}</strong> to move
+    <strong>{{faction}}</strong> <span v-if="pushed === null">to move</span><span v-else>just moved</span>
+  </p>
+  <p id="pushedindicator" v-if="pushed !== null">
+    <svg width="50" height="50" viewBox="0 0 1 1">
+      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='stylePushed'></triangle>
+      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='stylePushedInner'></triangle>
+    </svg>
+    <strong>{{pushed}}</strong> has been pushed
   </p>
 </div>
 </template>
 
 <script>
 import Triangle from './Triangle'
+import colours from './Colours'
 
 var validator = function (value) {
   return value === 'red' || value === 'green'
 }
 
 export default {
+  data: function () {
+    return {
+      x: 0.5,
+      y: 0.41,
+      rOuter: 0.58,
+      rInner: 0.3,
+      u: -1
+    }
+  },
   computed: {
     style: function () {
       return {
-        fill: this.faction === 'red' ? '#FF4452' : '#64BC0D'
+        fill: this.faction === 'red' ? colours.outer.red : colours.outer.green
       }
     },
     styleInner: function () {
       return {
-        fill: this.faction === 'red' ? '#820A13' : '#306000'
+        fill: this.faction === 'red' ? colours.inner.red : colours.inner.green
+      }
+    },
+    stylePushed: function () {
+      return {
+        fill: this.pushed === 'red' ? colours.outer.red : colours.outer.green
+      }
+    },
+    stylePushedInner: function () {
+      return {
+        fill: this.pushed === 'red' ? colours.inner.red : colours.inner.green
       }
     }
   },
@@ -35,7 +62,9 @@ export default {
       validator: validator
     },
     pushed: {
-      validator: validator
+      validator: function (value) {
+        return validator(value) || value === null
+      }
     }
   },
   components: {
@@ -45,7 +74,7 @@ export default {
 </script>
 
 <style>
-.indicator {
+#indicator {
   font-family: "Linux Biolinum", sans-serif;
   font-size: 25px;
   width: max-content;
@@ -53,15 +82,16 @@ export default {
   left: 53%;
   top: 40px;
 }
-.indicator p {
+#indicator p {
   margin: 0;
 }
-.indicator svg {
+#indicator svg {
   display: inline-block;
   margin-bottom: -18px;
   margin-right: 5px;
 }
-.indicator text {
-
+p#pushedindicator {
+  margin-top:5px;
+  margin-left: 25px;
 }
 </style>
