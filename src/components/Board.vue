@@ -105,6 +105,7 @@ export default {
       // called when a player chooses a destination to which to move a piece
       this.moving.loc = destination
       this.moving.starting = false
+      this.pushedPreviousTurn = null
 
       if (this.toBePushed) { // if we are moving to resolve a push
         this.pushed.clear()
