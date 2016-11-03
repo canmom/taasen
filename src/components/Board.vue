@@ -1,6 +1,6 @@
 <template>
 <div class="game">
-  <move-indicator :faction="toMove" :pushed="toBePushed"></move-indicator>
+  <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving"></move-indicator>
   <svg class="board" viewBox="0 0 4 3.5">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
     <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>

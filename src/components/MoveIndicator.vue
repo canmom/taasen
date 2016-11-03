@@ -14,6 +14,13 @@
     </svg>
     <strong>{{pushed}}</strong> has been pushed
   </p>
+  <p id="choosepushedindicator" v-if="pushed !== null && moving === null">
+    <svg width="50" height="50" viewBox="0 0 1 1"> 
+      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
+      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
+    </svg>
+    <strong>{{faction}}</strong> to choose which piece to push
+  </p>
 </div>
 </template>
 
@@ -65,7 +72,8 @@ export default {
       validator: function (value) {
         return validator(value) || value === null
       }
-    }
+    },
+    moving: null
   },
   components: {
     Triangle
@@ -93,5 +101,9 @@ export default {
 p#pushedindicator {
   margin-top:5px;
   margin-left: 25px;
+}
+p#choosepushedindicator {
+  margin-top: 5px;
+  margin-left: 50px;
 }
 </style>
