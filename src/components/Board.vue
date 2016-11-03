@@ -107,7 +107,6 @@ export default {
       this.moving.loc = destination
       this.moving.starting = false
       this.pushedPreviousTurn = null
-      this.bluePieceMovedPreviousTurn = null
 
       if (this.toBePushed) { // if we are moving to resolve a push
         this.pushed.clear()
@@ -116,6 +115,8 @@ export default {
       } else {
         if (this.moving.faction === 'blue') {
           this.bluePieceMovedPreviousTurn = this.moving
+        } else {
+          this.bluePieceMovedPreviousTurn = null
         }
         this.getPushed(destination)
       }
