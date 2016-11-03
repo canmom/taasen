@@ -21,12 +21,19 @@
     </svg>
     <strong>{{faction}}</strong> to choose which piece to push
   </p>
+  <div id="crushedindicator" v-if="crushed.length">
+    <h2>crushed pieces:</h2>
+    <svg width="400" height="50" viewBox="0 0 8 1">
+      <piece v-for="(piece, index) in crushed" :loc="{x:0.5+index*1.02,y:0.5}" :r="0.35" :piece="piece.piece" :faction="piece.faction" :starting="0" state="selectable"></piece>
+    </svg>
+  </div>
 </div>
 </template>
 
 <script>
 import Triangle from './Triangle'
 import colours from './Colours'
+import Piece from './Piece'
 
 var validator = function (value) {
   return value === 'red' || value === 'green'
@@ -73,10 +80,12 @@ export default {
         return validator(value) || value === null
       }
     },
-    moving: null
+    moving: null,
+    crushed: null
   },
   components: {
-    Triangle
+    Triangle,
+    Piece
   }
 }
 </script>
@@ -88,7 +97,7 @@ export default {
   width: max-content;
   position: absolute;
   left: 53%;
-  top: 40px;
+  top: 2.75vw;
 }
 #indicator p {
   margin: 0;
@@ -105,5 +114,21 @@ p#pushedindicator {
 p#choosepushedindicator {
   margin-top: 5px;
   margin-left: 50px;
+}
+#crushedindicator {
+  position: absolute;
+  width: max-content;
+  top: 140px;
+  left: 85px;
+}
+#crushedindicator h2 {
+  font-size: 25px;
+  font-weight: normal;
+  font-style: italic;
+  margin: 0;
+}
+#crushedindicator svg {
+  margin-top: 5px;
+  margin-left: 25px;
 }
 </style>

@@ -30,7 +30,7 @@ export default {
     },
     loc: {
       validator: function (value) {
-        return typeof value === 'string' && value.length === 2
+        return (typeof value === 'string' && value.length === 2) || (typeof value === 'object')
       }
     },
     r: Number,
@@ -53,10 +53,18 @@ export default {
       }
     },
     x: function () {
-      return tiles[this.loc].x + this.offset.x
+      if (typeof this.loc === 'string') {
+        return tiles[this.loc].x + this.offset.x
+      } else {
+        return this.loc.x
+      }
     },
     y: function () {
-      return tiles[this.loc].y + this.offset.y
+      if (typeof this.loc === 'string') {
+        return tiles[this.loc].y + this.offset.y
+      } else {
+        return this.loc.y
+      }
     },
     elClass: function () {
       return `piece ${this.piece} ${this.faction}`

@@ -1,10 +1,10 @@
 <template>
 <div class="game">
-  <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving"></move-indicator>
+  <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving" :crushed="crushed"></move-indicator>
   <svg class="board" viewBox="0 0 4 3.5">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
-    <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
     <pushed-overlay v-for="pushedPiece in [...pushed.values()]" :x="tiles[pushedPiece.loc].x" :y="tiles[pushedPiece.loc].y" :up="tiles[pushedPiece.loc].u" :r="tileRadius"></pushed-overlay>
+    <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
     <piece v-for='piece in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :state='piece.state' v-on:select='beginMoving(piece)'></piece>
   </svg>
 </div>
@@ -47,7 +47,8 @@ export default {
       moving: null,
       pushed: new Set(),
       toMove: 'red',
-      toBePushed: null
+      toBePushed: null,
+      crushed: []
     }
   },
   components: {
@@ -132,6 +133,7 @@ export default {
       }
     },
     crushPiece: function (piece) {
+      this.crushed.push(piece)
       this.pieces.splice(this.pieces.indexOf(piece), 1) // delete the piece from the pieces array
       this.pushed.clear()
       this.toBePushed = null
