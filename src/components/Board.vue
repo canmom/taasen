@@ -48,7 +48,8 @@ export default {
       pushed: new Set(),
       toMove: 'red',
       toBePushed: null,
-      crushed: []
+      crushed: [],
+      pushedPreviousTurn: null
     }
   },
   components: {
@@ -70,7 +71,7 @@ export default {
       var opposing = this.toMove
       this.toMove = this.opposingSide()
       for (var piece of this.pieces) {
-        if (piece.faction === opposing) {
+        if (piece.faction === opposing || piece === this.pushedPreviousTurn) {
           piece.state = 'nonselectable'
         } else {
           piece.state = 'selectable'
@@ -107,6 +108,7 @@ export default {
 
       if (this.toBePushed) { // if we are moving to resolve a push
         this.pushed.clear()
+        this.pushedPreviousTurn = this.moving
         this.toBePushed = null
       } else {
         this.getPushed(destination)
