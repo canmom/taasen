@@ -45,7 +45,8 @@ export const tiles = {
     y: bY + sY / 3,
     u: -1,
     t: 'grass',
-    a: ['a3', 'a5', 'b3', 'b5']
+    a: ['a3', 'a5', 'b3', 'b5'],
+    p: ['a3', 'a5']
   },
   a6: {
     x: bX + 2.5 * sX,
@@ -76,13 +77,15 @@ export const tiles = {
     y: bY + 4 * sY / 3,
     u: -1,
     t: 'grass',
-    a: ['b2', 'c3', 'a4', 'b5']
+    a: ['b2', 'c3', 'a4', 'b5'],
+    p: ['b2', 'c3']
   },
   b5: {x: bX + 2 * sX,
     y: bY + 4 * sY / 3,
     u: -1,
     t: 'grass',
-    a: ['c5', 'b6', 'b3', 'a4']
+    a: ['c5', 'b6', 'b3', 'a4'],
+    p: ['c5', 'b6']
   },
   c3: {x: bX + sX,
     y: bY + 2 * sY,

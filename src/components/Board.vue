@@ -27,16 +27,16 @@ class GamePiece {
   }
 }
 
-var pieces = [];
-
-['red', 'green', 'blue'].map(function (faction) {
-  ['thaum', 'sciane', 'paupil'].map(function (piece) {
-    pieces.push(new GamePiece(faction, piece))
-  })
-})
-
 export default {
   data: function () {
+    var pieces = [];
+
+    ['red', 'green', 'blue'].map(function (faction) {
+      ['thaum', 'sciane', 'paupil'].map(function (piece) {
+        pieces.push(new GamePiece(faction, piece))
+      })
+    })
+
     return {
       tiles: tiles,
       pieces: pieces,
@@ -74,9 +74,9 @@ export default {
       this.resetMoving()
       if (this.pushed.size !== 0) {
         this.toBePushed = this.opposingSide()
+      } else {
+        this.toMove = this.opposingSide()
       }
-
-      this.toMove = this.opposingSide()
     },
     showDestinations: function (tileLabel) {
       for (var label of tiles[tileLabel].a) {
@@ -101,7 +101,7 @@ export default {
       var movingPiece = this.pieces[this.moving]
       var pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[movingPiece.piece]
 
-      for (var label of tiles[destination].a) {
+      for (var label of tiles[destination].p || tiles[destination].a) {
         for (var piece of this.pieces) {
           if (piece.loc === label && piece.piece === pushedPieceType && piece.faction !== movingPiece.faction) {
             this.pushed.add([label, piece])
