@@ -12,7 +12,7 @@
       <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='stylePushed'></triangle>
       <triangle :x="x" :y="y" :r="rInner" :up="u" :style='stylePushedInner'></triangle>
     </svg>
-    <strong>{{pushed}}</strong> has been pushed
+    <strong>{{pushed}}</strong> <span v-if="moving !==null">to choose where pushed piece goes</span><span v-else>will be pushed</span>
   </p>
   <p id="choosepushedindicator" v-if="pushed !== null && moving === null">
     <svg width="50" height="50" viewBox="0 0 1 1"> 
