@@ -59,11 +59,22 @@ export default {
       return this.toMove === 'red' ? 'green' : 'red'
     },
     resetMoving: function () {
-      if (typeof this.moving === 'number') {
-        this.pieces[this.moving].state = 'selectable'
-      }
       this.moving = null
       this.destinations = {}
+    },
+    nextTurn: function () {
+      var opposing = this.toMove
+      this.toMove = this.opposingSide()
+      for (var piece of this.pieces) {
+        if (piece.faction === opposing) {
+          piece.state = 'nonselectable'
+        } else {
+          piece.state = 'selectable'
+        }
+      }
+    },
+    setUpPush: function () {
+      this.toBePushed = this.opposingSide()
     },
     movePiece: function (destination) {
       this.pieces[this.moving].loc = destination
@@ -72,9 +83,9 @@ export default {
       this.getPushed(destination)
       this.resetMoving()
       if (this.pushed.size !== 0) {
-        this.toBePushed = this.opposingSide()
+        this.setUpPush()
       } else {
-        this.toMove = this.opposingSide()
+        this.nextTurn()
       }
     },
     showDestinations: function (tileLabel) {
