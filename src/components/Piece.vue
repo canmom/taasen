@@ -1,6 +1,6 @@
 <template>
 <g :class='elClass' v-on:click="$emit('select')">
-  <circle :class="selected ? 'selected' : 'outline'" :cx='x' :cy='y' :r='coreRadius+strokeWidth' />
+  <circle :style='outlineStyle' :cx='x' :cy='y' :r='coreRadius+strokeWidth' />
   <line v-if='isSciane' :x1='x-scianeArmLength-strokeWidth/2' :x2='x+scianeArmLength+strokeWidth/2' :y1='y' :y2='y' :style='outlineStrokeStyle'/>
   <line v-if='isSciane' :y1='y-scianeArmLength-strokeWidth/2' :y2='y+scianeArmLength+strokeWidth/2' :x1='x' :x2='x' :style='outlineStrokeStyle'/>
   <line v-if='isSciane' :x1='x-scianeArmLength' :x2='x+scianeArmLength' :y1='y' :y2='y' :style='strokeStyle'/>
@@ -14,6 +14,7 @@
 import Triangle from './Triangle'
 import {tiles} from './Tiles'
 import trianglePoints from './TrianglePoints'
+import states from './States'
 
 export default {
   props: {
@@ -34,7 +35,11 @@ export default {
     },
     r: Number,
     starting: Boolean,
-    selected: Boolean
+    state: {
+      validator: function (value) {
+        return Object.keys(states).includes(value)
+      }
+    }
   },
   computed: {
     // offset if it's on the starting tile
@@ -64,9 +69,15 @@ export default {
         'stroke-width': this.strokeWidth
       }
     },
+    outlineStyle: function () {
+      return {
+        stroke: 'none',
+        fill: states[this.state]
+      }
+    },
     outlineStrokeStyle: function () {
       return {
-        stroke: this.selected ? 'yellow' : 'black',
+        stroke: states[this.state],
         'stroke-width': this.strokeWidth * 2
       }
     },
@@ -90,16 +101,6 @@ export default {
 </script>
 
 <style>
-.outline {
-  fill: black;
-  stroke: none;
-}
-
-.selected {
-  fill: yellow;
-  stroke: none;
-}
-
 .red {
   fill:#820A13;
   stroke:#FF4452;

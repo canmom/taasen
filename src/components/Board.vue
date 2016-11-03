@@ -4,7 +4,7 @@
   <svg class="board" viewBox="0 0 4 3.5">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
     <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
-    <piece v-for='(piece, pieceIndex) in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :selected='piece.selected' v-on:select='beginMoving(pieceIndex)'></piece>
+    <piece v-for='(piece, pieceIndex) in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :state='piece.state' v-on:select='beginMoving(pieceIndex)'></piece>
   </svg>
 </div>
 </template>
@@ -22,8 +22,7 @@ class GamePiece {
     this.piece = piece
     this.loc = {red: 'a1', green: 'a7', blue: 'd4'}[faction]
     this.starting = true
-    this.selected = false
-    this.pushed = false
+    this.state = 'selectable'
   }
 }
 
@@ -61,7 +60,7 @@ export default {
     },
     resetMoving: function () {
       if (typeof this.moving === 'number') {
-        this.pieces[this.moving].selected = false
+        this.pieces[this.moving].state = 'selectable'
       }
       this.moving = null
       this.destinations = {}
@@ -91,7 +90,7 @@ export default {
       this.resetMoving()
       if (this.pieces[pieceIndex].faction === this.toMove || this.pieces[pieceIndex].faction === 'blue') {
         this.moving = pieceIndex
-        this.pieces[pieceIndex].selected = true
+        this.pieces[pieceIndex].state = 'selected'
         this.showDestinations(this.pieces[pieceIndex].loc)
       }
     },
