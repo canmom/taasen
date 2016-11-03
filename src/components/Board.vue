@@ -4,7 +4,7 @@
   <svg class="board" viewBox="0 0 4 3.5">
     <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
     <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
-    <piece v-for='(piece, pieceIndex) in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :state='piece.state' v-on:select='beginMoving(pieceIndex)'></piece>
+    <piece v-for='piece in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :state='piece.state' v-on:select='beginMoving(piece)'></piece>
   </svg>
 </div>
 </template>
@@ -73,15 +73,42 @@ export default {
         }
       }
     },
+    getPushed: function (destination) {
+      this.pushed.clear()
+
+      var pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[this.moving.piece]
+
+      for (var label of tiles[destination].p || tiles[destination].a) {
+        for (var piece of this.pieces) {
+          if (piece.loc === label && piece.piece === pushedPieceType && piece.faction !== this.moving.faction) {
+            this.pushed.add(piece)
+          }
+        }
+      }
+    },
     setUpPush: function () {
       this.toBePushed = this.opposingSide()
+      for (var piece of this.pieces) {
+        if (this.pushed.has(piece)) {
+          piece.state = 'pushed'
+        } else {
+          piece.state = 'nonselectable'
+        }
+      }
     },
     movePiece: function (destination) {
-      this.pieces[this.moving].loc = destination
-      this.pieces[this.moving].starting = false
+      this.moving.loc = destination
+      this.moving.starting = false
 
-      this.getPushed(destination)
+      if (this.toBePushed) { // if we are moving to resolve a push
+        this.pushed.clear()
+        this.toBePushed = null
+      } else {
+        this.getPushed(destination)
+      }
+
       this.resetMoving()
+
       if (this.pushed.size !== 0) {
         this.setUpPush()
       } else {
@@ -97,26 +124,12 @@ export default {
         if (unoccupied) this.destinations[label] = tiles[label]
       }
     },
-    beginMoving: function (pieceIndex) {
+    beginMoving: function (piece) {
       this.resetMoving()
-      if (this.pieces[pieceIndex].faction === this.toMove || this.pieces[pieceIndex].faction === 'blue') {
-        this.moving = pieceIndex
-        this.pieces[pieceIndex].state = 'selected'
-        this.showDestinations(this.pieces[pieceIndex].loc)
-      }
-    },
-    getPushed: function (destination) {
-      this.pushed.clear()
-
-      var movingPiece = this.pieces[this.moving]
-      var pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[movingPiece.piece]
-
-      for (var label of tiles[destination].p || tiles[destination].a) {
-        for (var piece of this.pieces) {
-          if (piece.loc === label && piece.piece === pushedPieceType && piece.faction !== movingPiece.faction) {
-            this.pushed.add([label, piece])
-          }
-        }
+      if (piece.state === 'pushed' || piece.state === 'selectable') {
+        this.moving = piece
+        piece.state = 'selected'
+        this.showDestinations(piece.loc)
       }
     }
   }
