@@ -6,8 +6,9 @@
     </header>
     <board></board>
     <footer>
+      <p><a href="https://github.com/canmom/taasen">source code</a> (built with <a href='https://vuejs.org/'>Vue.js</a>)</p>
       <p><a href='http://unicornjelly.com/taasen1.html'>original rules</a> by <a href='http://jenniverse.com/'>Jennifer Diane Reitz</a></p>
-      <p><a href='https://vuejs.org/'>Vue.js</a> implementation by <a href='https://github.com/canmom'>canmom</a></p>
+      <p>implementation by <a href='https://github.com/canmom'>canmom</a></p>
       <p>fonts by <a href='http://www.linuxlibertine.org'>Linux Libertine</a></p>
     </footer>
   </div>
