@@ -42,6 +42,16 @@ The game ends when one player has lost all of their pieces, or cannot make any l
 
 Further projects might include allowing people to play Taasen over the internet rather than require both players to be in the same room, and creating simple AI to play against.
 
+## Structure
+
+The game is built with [Vue.js](https://vuejs.org/) and the [Webpack vue-loader template](https://vuejs-templates.github.io/webpack/). It consists mainly of Vue components in the `src`, especially `src/components` folder.
+
+A Vue component defines a module, which can have data passed to it, and has corresponding DOM elements. The root component is `App.vue`.
+
+The main part of the game is the dynamically generated SVG element containing the game board tiles, all pieces, and overlays to allow the player to indicate where they are moving. This is contained in `board.vue`, and consists of elements from `Tile.vue` for game tiles, `Piece.vue` for the playing pieces, and `PushedOverlay.vue` and `DestinationOverlay.vue` to show red and yellow overlays over tiles that contain a pushed piece, or can be moved to by the selected piece. Additionally, `MoveIndicator.vue` contains a small display describing the current game state, including a display of which pieces have been crushed that is positioned alongside the board. `Triangle.vue` is used to effectively add a 'triangle' element to SVG for drawing. The other javascript files contain small utility functions or configure colour information.
+
+The actual game logic and state is modelled in `Board.vue`. The `GamePiece` class defines the properties of a piece with attributes for its state and location. Each piece has a type (Thaum, Sciane or Paupil) and a faction; the combination (e.g. 'redthaum') is the piece's unique ID.
+
 ## Build setup
 
 ``` bash
