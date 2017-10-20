@@ -2,10 +2,39 @@
 <div class="game">
   <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving" :crushed="crushed"></move-indicator>
   <svg class="board" viewBox="0 0 4 3.5">
-    <tile v-for="tile in tiles" :x="tile.x" :y="tile.y" :up="tile.u" :r="tileRadius" :t="tile.t"></tile>
-    <pushed-overlay v-for="pushedPiece in [...pushed.values()]" :x="tiles[pushedPiece.loc].x" :y="tiles[pushedPiece.loc].y" :up="tiles[pushedPiece.loc].u" :r="tileRadius"></pushed-overlay>
-    <destination-overlay v-for="(dest,destLabel) in destinations" :x="dest.x" :y="dest.y" :up="dest.u" :r="tileRadius" v-on:move="movePiece(destLabel)"></destination-overlay>
-    <piece v-for='piece in pieces' :loc='piece.loc' :r='pieceRadius' :piece='piece.piece' :faction='piece.faction' :starting='piece.starting' :state='piece.state' v-on:select='beginMoving(piece)'></piece>
+    <tile
+      v-for="tile in tiles"
+      :x="tile.x"
+      :y="tile.y"
+      :up="tile.u"
+      :r="tileRadius"
+      :t="tile.t">
+      </tile>
+    <pushed-overlay
+      v-for="pushedPiece in [...pushed.values()]"
+      :x="tiles[pushedPiece.loc].x"
+      :y="tiles[pushedPiece.loc].y"
+      :up="tiles[pushedPiece.loc].u"
+      :r="tileRadius">
+      </pushed-overlay>
+    <destination-overlay
+      v-for="(dest,destLabel) in destinations"
+      :x="dest.x"
+      :y="dest.y"
+      :up="dest.u"
+      :r="tileRadius"
+      v-on:move="movePiece(destLabel)">
+      </destination-overlay>
+    <piece
+      v-for='piece in pieces'
+      :loc='piece.loc'
+      :r='pieceRadius'
+      :piece='piece.piece'
+      :faction='piece.faction'
+      :starting='piece.starting'
+      :state='piece.state'
+      v-on:select='beginMoving(piece)'>
+      </piece>
   </svg>
 </div>
 </template>
@@ -171,12 +200,13 @@ export default {
 
 <style>
 .game {
+  max-width: 90vmin;
+  max-height: 90vmax;
   width: 100%;
+  position: fixed; /* Necessary to make this a Containing Block and allow fixed positioning relative to it.*/
 }
 .board {
-  width: 45%;
-  height: 39.375%;
-  margin: 0 auto;
   display: block;
+  max-height: 100%;
 }
 </style>

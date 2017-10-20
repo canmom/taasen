@@ -6,10 +6,7 @@
     </header>
     <board></board>
     <footer>
-      <p><a href="https://github.com/canmom/taasen">source code</a> (built with <a href='https://vuejs.org/'>Vue.js</a>)</p>
-      <p><a href='http://unicornjelly.com/taasen1.html'>original rules</a> by <a href='http://jenniverse.com/'>Jennifer Diane Reitz</a></p>
-      <p>implementation by <a href='https://github.com/canmom'>canmom</a></p>
-      <p>fonts by <a href='http://www.linuxlibertine.org'>Linux Libertine</a></p>
+      <p><a href="https://github.com/canmom/taasen">source</a> &mdash; based on <a href='http://unicornjelly.com/taasen1.html'>rules</a> by <a href='http://jenniverse.com/'>Jennifer Diane Reitz</a></p>
     </footer>
   </div>
 </template>
@@ -30,18 +27,29 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   margin: 0;
+  font-size: 25px;
+}
+@media (max-width: 999px) and (min-width: 500px), (max-height: 599px) and (min-height: 400px) {
+  body {
+    font-size: 20px;
+  }
+}
+@media (max-width: 499px), (max-height: 399px) {
+  body {
+    font-size: 15px;
+  }
 }
 
 header {
   position: absolute;
-  margin-left: 40px;
-  margin-top: 20px;
+  left: 40px;
+  top: 20px;
 }
 
 header h1 {
   font-family: "Linux Libertine Display",serif;
   font-weight: normal;
-  font-size: 80px;
+  font-size: 320%;
   margin:0;
 }
 
@@ -49,7 +57,6 @@ header p {
   margin-top:-5px;
   margin-left:60px;
   font-family: "Linux Biolinum", sans-serif;
-  font-size: 25px;
   font-style: italic;
 }
 
@@ -62,9 +69,9 @@ footer {
 footer p {
   color:  white;
   font-family: "Linux Biolinum", sans-serif;
-  font-size: 20px;
+  font-size: 80%;
   margin: 0;
-  text-align:  right;
+  text-align: right;
 }
 
 footer a {
@@ -79,5 +86,9 @@ footer a:hover {
 
 #app {
   width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

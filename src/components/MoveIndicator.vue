@@ -1,21 +1,21 @@
 <template>
 <div id="indicator">
   <p>
-    <svg width="50" height="50" viewBox="0 0 1 1"> 
+    <svg viewBox="0 0 1 1">
       <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
       <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
     </svg>
     <strong>{{faction}}</strong> <span v-if="pushed === null">to move</span><span v-else>just moved</span>
   </p>
   <p id="pushedindicator" v-if="pushed !== null">
-    <svg width="50" height="50" viewBox="0 0 1 1">
+    <svg viewBox="0 0 1 1">
       <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='stylePushed'></triangle>
       <triangle :x="x" :y="y" :r="rInner" :up="u" :style='stylePushedInner'></triangle>
     </svg>
     <strong>{{pushed}}</strong> <span v-if="moving !==null">to choose where pushed piece goes</span><span v-else>will be pushed</span>
   </p>
   <p id="choosepushedindicator" v-if="pushed !== null && moving === null">
-    <svg width="50" height="50" viewBox="0 0 1 1"> 
+    <svg viewBox="0 0 1 1">
       <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
       <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
     </svg>
@@ -23,7 +23,7 @@
   </p>
   <div id="crushedindicator" v-if="crushed.length">
     <h2>crushed pieces:</h2>
-    <svg width="400" height="50" viewBox="0 0 8 1">
+    <svg viewBox="0 0 8 1">
       <piece v-for="(piece, index) in crushed" :loc="{x:0.5+index*1.02,y:0.5}" :r="0.35" :piece="piece.piece" :faction="piece.faction" :starting="0" state="selectable"></piece>
     </svg>
   </div>
@@ -93,42 +93,44 @@ export default {
 <style>
 #indicator {
   font-family: "Linux Biolinum", sans-serif;
-  font-size: 25px;
   width: max-content;
   position: absolute;
-  left: 53%;
-  top: 2.75vw;
+  left: 48vmin;
+  top: 3.2vmin;
+  transform-origin: top left;
 }
 #indicator p {
   margin: 0;
 }
 #indicator svg {
   display: inline-block;
-  margin-bottom: -18px;
-  margin-right: 5px;
+  margin-bottom: -0.72em;
+  margin-right: 0.2em;
+  width: 2em;
 }
 p#pushedindicator {
-  margin-top:5px;
-  margin-left: 25px;
+  margin-top: 0.2em;
+  margin-left: 1em;
 }
 p#choosepushedindicator {
-  margin-top: 5px;
-  margin-left: 50px;
+  margin-top: 0.2em;
+  margin-left: 2em;
 }
 #crushedindicator {
   position: absolute;
   width: max-content;
-  top: 140px;
-  left: 85px;
+  top: 5.8em;
+  left: 3.4em;
 }
 #crushedindicator h2 {
-  font-size: 25px;
+  font-size: 1em;
   font-weight: normal;
   font-style: italic;
   margin: 0;
 }
 #crushedindicator svg {
-  margin-top: 5px;
-  margin-left: 25px;
+  margin-top: 0.2em;
+  margin-left: 1em;
+  width: 12em;
 }
 </style>

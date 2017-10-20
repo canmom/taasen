@@ -1,6 +1,6 @@
 export const tileRadius = 1 / Math.sqrt(3)
 const bX = 0.5           // x baseline
-const bY = 3.2           // y baseline
+const bY = 3.1           // y baseline
 const sX = 1             // x step
 const sY = -tileRadius * 1.5 // y step
 
