@@ -28,7 +28,7 @@ To push a piece, a piece must move adjacent to it. The opposing player must then
 
 In some cases, a piece may move to push two pieces at once. In this case, the attacking player must choose which of the pieces to push.
 
-A piece that has been pushed on the previous turn can't be moved to the location it was pushed from. (**Note:** due to a misunderstanding of the rules, this rule has not been implemented correctly! In the current version, a pushed piece cannot be moved at all on the following turn.)
+A piece that has been pushed on the previous turn can't be moved back to the location it was pushed from. (**Note:** due to a misunderstanding of the rules, this rule has not been implemented correctly! In the current version, a pushed piece cannot be moved at all on the following turn.)
 
 If a blue piece is moved, it cannot be moved on the following turn.
 
