@@ -24,7 +24,7 @@
   <div id="crushedindicator" v-if="crushed.length">
     <h2>crushed pieces:</h2>
     <svg viewBox="0 0 8 1">
-      <piece v-for="(piece, index) in crushed" :loc="{x:0.5+index*1.02,y:0.5}" :r="0.35" :piece="piece.piece" :faction="piece.faction" :starting="0" state="selectable"></piece>
+      <piece v-for="(piece, index) in crushed" :key="piece.id" :loc="{x:0.5+index*1.02,y:0.5}" :r="0.35" :piece="piece.piece" :faction="piece.faction" :starting="0" state="selectable"></piece>
     </svg>
   </div>
 </div>

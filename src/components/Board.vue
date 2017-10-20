@@ -3,18 +3,20 @@
   <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving" :crushed="crushed"></move-indicator>
   <svg class="board" viewBox="0 0 4 3.5">
     <tile
-      v-for="tile in tiles"
+      v-for="(tile,label) in tiles"
       :x="tile.x"
       :y="tile.y"
       :up="tile.u"
       :r="tileRadius"
+      :key="label"
       :t="tile.t">
       </tile>
     <pushed-overlay
-      v-for="pushedPiece in [...pushed.values()]"
+      v-for="pushedPiece in Array.from(pushed.values())"
       :x="tiles[pushedPiece.loc].x"
       :y="tiles[pushedPiece.loc].y"
       :up="tiles[pushedPiece.loc].u"
+      :key="pushedPiece.id"
       :r="tileRadius">
       </pushed-overlay>
     <destination-overlay
@@ -23,6 +25,7 @@
       :y="dest.y"
       :up="dest.u"
       :r="tileRadius"
+      :key="destLabel"
       v-on:move="movePiece(destLabel)">
       </destination-overlay>
     <piece
@@ -33,6 +36,7 @@
       :faction='piece.faction'
       :starting='piece.starting'
       :state='piece.state'
+      :key='piece.id'
       v-on:select='beginMoving(piece)'>
       </piece>
   </svg>
@@ -51,6 +55,7 @@ class GamePiece {
   constructor (faction, piece) {
     this.faction = faction
     this.piece = piece
+    this.id = faction + piece
     this.loc = {red: 'a1', green: 'a7', blue: 'd4'}[faction]
     this.starting = true
     this.state = faction !== 'green' ? 'selectable' : 'nonselectable'
