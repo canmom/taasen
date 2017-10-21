@@ -21,7 +21,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'assets/fonts.css';
+
 body {
   background: linear-gradient( to bottom, #96F6F6, #117985);
   background-repeat: no-repeat;

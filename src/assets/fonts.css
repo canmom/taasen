@@ -1,0 +1,36 @@
+/*Linux Libertine font*/
+
+@font-face {
+    font-family: 'Linux Libertine';
+    font-weight: normal;
+    font-style: normal;
+    src: local("Linux Libertine"), url("/fonts/LinLibertine_R.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Linux Libertine';
+    font-weight: bold;
+    font-style: normal;
+    src: local("Linux Libertine Bold"), url("/fonts/LinLibertine_RB.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Linux Biolinum';
+    font-weight: normal;
+    font-style: normal;
+    src: local("Linux Biolinum"), url("/fonts/LinBiolinum_R.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Linux Biolinum';
+    font-weight: normal;
+    font-style: italic;
+    src: local("Linux Biolinum Italic"), url("/fonts/LinBiolinum_RI.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'Linux Biolinum';
+    font-weight: bold;
+    font-style: normal;
+    src: local("Linux Biolinum Bold"), url("/fonts/LinBiolinum_RB.woff") format("woff");
+}
