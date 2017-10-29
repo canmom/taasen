@@ -10,7 +10,7 @@ import Triangle from './Triangle'
 import colours from './Colours'
 
 export default {
-  data: function () {
+  data () {
     return {
       x: 0.5,
       rOuter: 0.58,
@@ -18,9 +18,9 @@ export default {
     }
   },
   computed: {
-    style: function () { return { fill: colours.outer[this.faction] } },
-    styleInner: function () { return { fill: colours.inner[this.faction] } },
-    y: function () { return 0.5 + 0.09 * this.u }
+    style () { return { fill: colours.outer[this.faction] } },
+    styleInner () { return { fill: colours.inner[this.faction] } },
+    y () { return 0.5 + 0.09 * this.u }
   },
   props: {
     faction: {

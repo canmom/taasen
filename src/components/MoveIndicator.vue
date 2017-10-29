@@ -31,7 +31,7 @@ export default {
       validator: (value) => { return ['red', 'green'].includes(value) }
     },
     pushed: {
-      validator: function (value) {
+      validator (value) {
         return (value) => { return ['red', 'green', null].includes(value) }
       }
     },

@@ -12,7 +12,7 @@ export default {
     x: Number,
     y: Number,
     up: {
-      validator: function (value) {
+      validator (value) {
         return value === 1 || value === -1
       }
     },

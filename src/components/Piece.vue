@@ -19,86 +19,86 @@ import states from './States'
 export default {
   props: {
     piece: {
-      validator: function (value) {
+      validator (value) {
         return new Set(['thaum', 'sciane', 'paupil']).has(value)
       }
     },
     faction: {
-      validator: function (value) {
+      validator (value) {
         return new Set(['red', 'green', 'blue']).has(value)
       }
     },
     loc: {
-      validator: function (value) {
+      validator (value) {
         return (typeof value === 'string' && value.length === 2) || (typeof value === 'object')
       }
     },
     r: Number,
     starting: Boolean,
     state: {
-      validator: function (value) {
+      validator (value) {
         return Object.keys(states).includes(value)
       }
     }
   },
   computed: {
     // offset if it's on the starting tile
-    offset: function () {
+    offset () {
       if (this.starting) {
-        var points = trianglePoints(0, 0, this.r * 2, 1)
-        var directions = {thaum: 0, sciane: 1, paupil: 2}
+        const points = trianglePoints(0, 0, this.r * 2, 1)
+        const directions = {thaum: 0, sciane: 1, paupil: 2}
         return points[directions[this.piece]]
       } else {
         return {x: 0, y: 0}
       }
     },
-    x: function () {
+    x () {
       if (typeof this.loc === 'string') {
         return tiles[this.loc].x + this.offset.x
       } else {
         return this.loc.x
       }
     },
-    y: function () {
+    y () {
       if (typeof this.loc === 'string') {
         return tiles[this.loc].y + this.offset.y
       } else {
         return this.loc.y
       }
     },
-    elClass: function () {
+    elClass () {
       return `piece ${this.piece} ${this.faction}`
     },
-    strokeWidth: function () {
+    strokeWidth () {
       return this.r * 0.3
     },
-    strokeStyle: function () {
+    strokeStyle () {
       return {
         'stroke-width': this.strokeWidth
       }
     },
-    outlineStyle: function () {
+    outlineStyle () {
       return {
         stroke: 'none',
         fill: states[this.state]
       }
     },
-    outlineStrokeStyle: function () {
+    outlineStrokeStyle () {
       return {
         stroke: states[this.state],
         'stroke-width': this.strokeWidth * 2
       }
     },
-    coreRadius: function () {
+    coreRadius () {
       return {thaum: 1, sciane: 0.6, paupil: 0.8}[this.piece] * this.r
     },
-    scianeArmLength: function () {
+    scianeArmLength () {
       return this.r * 1.1
     },
-    isThaum: function () {
+    isThaum () {
       return this.piece === 'thaum'
     },
-    isSciane: function () {
+    isSciane () {
       return this.piece === 'sciane'
     }
   },

@@ -29,10 +29,10 @@ export default {
     VictoryOverlay
   },
   methods: {
-    onVictory: function (victoryState) {
+    onVictory (victoryState) {
       this.showVictoryOverlay(victoryState.winner)
     },
-    showVictoryOverlay: function (winner) {
+    showVictoryOverlay (winner) {
       this.victory = true
       this.winner = winner
     },

@@ -9,6 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
+    "lintfix": "eslint --fix --ext .js,.vue src",
     "deploy": "sed -i 's/\\/static/static/g' dist/index.html && gh-pages -d dist"
   },
   "dependencies": {

@@ -63,7 +63,7 @@ class GamePiece {
 }
 
 function generateBoard () {
-  var pieces = [];
+  const pieces = [];
 
   ['red', 'green', 'blue'].map(function (faction) {
     ['thaum', 'sciane', 'paupil'].map(function (piece) {
@@ -72,9 +72,9 @@ function generateBoard () {
   })
 
   return {
-    tiles: tiles,
-    pieces: pieces,
-    tileRadius: tileRadius,
+    tiles,
+    pieces,
+    tileRadius,
     pieceRadius: 0.2 * tileRadius,
     destinations: {},
     moving: null,
@@ -97,15 +97,15 @@ export default {
     MoveIndicator
   },
   methods: {
-    opposingSide: function () {
+    opposingSide () {
       return this.toMove === 'red' ? 'green' : 'red'
     },
-    resetMoving: function () {
+    resetMoving () {
       this.moving = null
       this.destinations = {}
     },
     determineSelectable (opposing) {
-      for (var piece of this.pieces) {
+      for (const piece of this.pieces) {
         if (piece.faction === opposing || piece === this.pushedPreviousTurn || piece === this.bluePieceMovedPreviousTurn) {
           piece.state = 'nonselectable'
         } else {
@@ -113,8 +113,8 @@ export default {
         }
       }
     },
-    nextTurn: function () {
-      var opposing = this.toMove
+    nextTurn () {
+      const opposing = this.toMove
       this.toMove = this.opposingSide()
       if (this.checkDefeat()) {
         this.declareVictory(this.opposingSide())
@@ -122,22 +122,22 @@ export default {
         this.determineSelectable(opposing)
       }
     },
-    getPushed: function (destination) {
+    getPushed (destination) {
       this.pushed.clear()
 
-      var pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[this.moving.piece]
+      const pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[this.moving.piece]
 
-      for (var label of tiles[destination].p || tiles[destination].a) {
-        for (var piece of this.pieces) {
+      for (const label of tiles[destination].p || tiles[destination].a) {
+        for (const piece of this.pieces) {
           if (piece.loc === label && piece.piece === pushedPieceType && piece.faction !== this.toMove && piece.faction !== this.moving.faction) {
             this.pushed.add(piece)
           }
         }
       }
     },
-    setUpPush: function () {
+    setUpPush () {
       this.toBePushed = this.opposingSide()
-      for (var piece of this.pieces) {
+      for (const piece of this.pieces) {
         if (this.pushed.has(piece)) {
           piece.state = 'pushed'
         } else {
@@ -145,7 +145,7 @@ export default {
         }
       }
     },
-    movePiece: function (destination) {
+    movePiece (destination) {
       // called when a player chooses a destination to which to move a piece
       this.moving.loc = destination
       this.moving.starting = false
@@ -175,16 +175,16 @@ export default {
         this.nextTurn()
       }
     },
-    showDestinations: function (tileLabel) {
-      for (var label of tiles[tileLabel].a) {
-        var unoccupied = true
-        for (var piece of this.pieces) {
+    showDestinations (tileLabel) {
+      for (const label of tiles[tileLabel].a) {
+        let unoccupied = true
+        for (const piece of this.pieces) {
           unoccupied = unoccupied && piece.loc !== label
         }
         if (unoccupied) this.destinations[label] = tiles[label]
       }
     },
-    crushPiece: function (piece) {
+    crushPiece (piece) {
       this.crushed.push(piece)
       this.pieces.splice(this.pieces.indexOf(piece), 1) // delete the piece from the pieces array
       this.pushed.clear()
@@ -192,7 +192,7 @@ export default {
       this.resetMoving()
       this.nextTurn()
     },
-    beginMoving: function (piece) {
+    beginMoving (piece) {
       // called when a player clicks on a piece
       if (piece.state === 'pushed' || piece.state === 'selectable') {
         this.resetMoving()
@@ -208,16 +208,16 @@ export default {
         this.crushPiece(piece)
       }
     },
-    checkDefeat: function () {
+    checkDefeat () {
       return this.factionHasNoPieces(this.toMove)
     },
-    factionHasNoPieces: function (faction) {
+    factionHasNoPieces (faction) {
       return !this.pieces.find((piece) => { return piece.faction === faction })
     },
-    declareVictory: function (faction) {
+    declareVictory (faction) {
       this.$emit('victory', { winner: faction })
     },
-    resetBoard: function (faction) {
+    resetBoard (faction) {
       Object.assign(this.$data, generateBoard())
     }
   }

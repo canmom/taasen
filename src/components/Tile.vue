@@ -10,19 +10,19 @@ export default {
     x: Number,
     y: Number,
     up: {
-      validator: function (value) {
+      validator (value) {
         return value === 1 || value === -1
       }
     },
     r: Number,
     t: {
-      validator: function (value) {
+      validator (value) {
         return new Set(['void', 'desert1', 'desert2', 'grass', 'sea']).has(value)
       }
     }
   },
   computed: {
-    elClass: function () {
+    elClass () {
       return `tile ${this.t}`
     }
   },
