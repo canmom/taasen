@@ -40,7 +40,6 @@
       v-on:select='beginMoving(piece)'>
       </piece>
   </svg>
-  <button v-on:click='victory()'>Simulate red victory</button>
 </div>
 </template>
 
@@ -103,15 +102,22 @@ export default {
       this.moving = null
       this.destinations = {}
     },
-    nextTurn: function () {
-      var opposing = this.toMove
-      this.toMove = this.opposingSide()
+    determineSelectable (opposing) {
       for (var piece of this.pieces) {
         if (piece.faction === opposing || piece === this.pushedPreviousTurn || piece === this.bluePieceMovedPreviousTurn) {
           piece.state = 'nonselectable'
         } else {
           piece.state = 'selectable'
         }
+      }
+    },
+    nextTurn: function () {
+      var opposing = this.toMove
+      this.toMove = this.opposingSide()
+      if (this.checkDefeat()) {
+        this.declareVictory(this.opposingSide())
+      } else {
+        this.determineSelectable(opposing)
       }
     },
     getPushed: function (destination) {
@@ -200,8 +206,14 @@ export default {
         this.crushPiece(piece)
       }
     },
-    victory: function () {
-      this.$emit('victory', { winner: 'red' })
+    checkDefeat: function () {
+      return this.factionHasNoPieces(this.toMove)
+    },
+    factionHasNoPieces: function (faction) {
+      return !this.pieces.find((piece) => { return piece.faction === faction })
+    },
+    declareVictory: function (faction) {
+      this.$emit('victory', { winner: faction })
     }
   }
 }
