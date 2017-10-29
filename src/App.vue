@@ -5,11 +5,11 @@
       <p>the game of Tryslmaistan chess</p>
     </header>
     <board
-      v-on:victory="onVictory"></board>
+      v-on:victory="onVictory" ref="board"></board>
     <footer>
       <p><a href="https://github.com/canmom/taasen">source</a> &mdash; based on <a href='http://unicornjelly.com/taasen1.html'>rules</a> by <a href='http://jenniverse.com/'>Jennifer Diane Reitz</a></p>
     </footer>
-    <victory-overlay :winner="winner" v-if="victory"></victory-overlay>
+    <victory-overlay :winner="winner" v-if="victory" v-on:reset="onReset"></victory-overlay>
   </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
     showVictoryOverlay: function (winner) {
       this.victory = true
       this.winner = winner
+    },
+    onReset () {
+      this.$refs.board.resetBoard()
+      this.victory = false
+      this.winner = null
     }
   }
 }

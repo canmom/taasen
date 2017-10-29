@@ -62,31 +62,33 @@ class GamePiece {
   }
 }
 
-export default {
-  data: function () {
-    var pieces = [];
+function generateBoard () {
+  var pieces = [];
 
-    ['red', 'green', 'blue'].map(function (faction) {
-      ['thaum', 'sciane', 'paupil'].map(function (piece) {
-        pieces.push(new GamePiece(faction, piece))
-      })
+  ['red', 'green', 'blue'].map(function (faction) {
+    ['thaum', 'sciane', 'paupil'].map(function (piece) {
+      pieces.push(new GamePiece(faction, piece))
     })
+  })
 
-    return {
-      tiles: tiles,
-      pieces: pieces,
-      tileRadius: tileRadius,
-      pieceRadius: 0.2 * tileRadius,
-      destinations: {},
-      moving: null,
-      pushed: new Set(),
-      toMove: 'red',
-      toBePushed: null,
-      crushed: [],
-      pushedPreviousTurn: null,
-      bluePieceMovedPreviousTurn: null
-    }
-  },
+  return {
+    tiles: tiles,
+    pieces: pieces,
+    tileRadius: tileRadius,
+    pieceRadius: 0.2 * tileRadius,
+    destinations: {},
+    moving: null,
+    pushed: new Set(),
+    toMove: 'red',
+    toBePushed: null,
+    crushed: [],
+    pushedPreviousTurn: null,
+    bluePieceMovedPreviousTurn: null
+  }
+}
+
+export default {
+  data: generateBoard,
   components: {
     Tile,
     Piece,
@@ -214,6 +216,9 @@ export default {
     },
     declareVictory: function (faction) {
       this.$emit('victory', { winner: faction })
+    },
+    resetBoard: function (faction) {
+      Object.assign(this.$data, generateBoard())
     }
   }
 }

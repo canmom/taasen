@@ -3,7 +3,7 @@
   <faction-triangle :faction="winner" :u="1"></faction-triangle>
   <h2>Congratulations!</h2>
   <p><strong>{{winner}}</strong> has put the right pieces in the right places.</p>
-  <button>Play again?</button>
+  <button v-on:click="onPlayAgain">Play again?</button>
 </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
   },
   props: {
     winner: String
+  },
+  methods: {
+    onPlayAgain () {
+      this.$emit('reset')
+    }
   }
 }
 </script>
