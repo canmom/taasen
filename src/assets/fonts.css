@@ -4,7 +4,7 @@
     font-family: 'Linux Libertine';
     font-weight: normal;
     font-style: normal;
-    src: local("Linux Libertine"), url("/fonts/LinLibertine_R.woff") format("woff");
+    src: /*local("Linux Libertine"),*/ url("https://canmom.github.io/fonts/LinLibertine_R.woff") format("woff");
 }
 
 @font-face {

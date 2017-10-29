@@ -26,15 +26,6 @@ import FactionTriangle from './FactionTriangle'
 import Piece from './Piece'
 
 export default {
-  data: function () {
-    return {
-      x: 0.5,
-      y: 0.41,
-      rOuter: 0.58,
-      rInner: 0.3,
-      u: -1
-    }
-  },
   props: {
     faction: {
       validator: (value) => { return ['red', 'green'].includes(value) }
