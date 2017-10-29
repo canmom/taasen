@@ -40,6 +40,7 @@
       v-on:select='beginMoving(piece)'>
       </piece>
   </svg>
+  <button v-on:click='victory()'>Simulate red victory</button>
 </div>
 </template>
 
@@ -198,6 +199,9 @@ export default {
       if (this.toBePushed && Object.keys(this.destinations).length === 0) {
         this.crushPiece(piece)
       }
+    },
+    victory: function () {
+      this.$emit('victory', { winner: 'red' })
     }
   }
 }

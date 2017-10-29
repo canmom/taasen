@@ -4,19 +4,38 @@
       <h1>Taasen</h1>
       <p>the game of Tryslmaistan chess</p>
     </header>
-    <board></board>
+    <board
+      v-on:victory="onVictory"></board>
     <footer>
       <p><a href="https://github.com/canmom/taasen">source</a> &mdash; based on <a href='http://unicornjelly.com/taasen1.html'>rules</a> by <a href='http://jenniverse.com/'>Jennifer Diane Reitz</a></p>
     </footer>
+    <victory-overlay :winner="winner" v-if="victory"></victory-overlay>
   </div>
 </template>
 
 <script>
 import Board from './components/Board'
+import VictoryOverlay from './components/VictoryOverlay'
 
 export default {
+  data: () => {
+    return {
+      victory: false,
+      winner: null
+    }
+  },
   components: {
-    Board
+    Board,
+    VictoryOverlay
+  },
+  methods: {
+    onVictory: function (victoryState) {
+      this.showVictoryOverlay(victoryState.winner)
+    },
+    showVictoryOverlay: function (winner) {
+      this.victory = true
+      this.winner = winner
+    }
   }
 }
 </script>
@@ -48,17 +67,23 @@ header {
   top: 20px;
 }
 
-header h1 {
+p {
+  font-family: "Linux Biolinum", sans-serif;
+}
+
+h1, h2, h3 {
   font-family: "Linux Libertine Display",serif;
+  margin:0;
+}
+
+header h1 {
   font-weight: normal;
   font-size: 320%;
-  margin:0;
 }
 
 header p {
   margin-top:-5px;
   margin-left:60px;
-  font-family: "Linux Biolinum", sans-serif;
   font-style: italic;
 }
 
@@ -70,7 +95,6 @@ footer {
 
 footer p {
   color:  white;
-  font-family: "Linux Biolinum", sans-serif;
   font-size: 80%;
   margin: 0;
   text-align: right;
