@@ -1,24 +1,15 @@
 <template>
 <div id="indicator">
   <p>
-    <svg viewBox="0 0 1 1">
-      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
-      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
-    </svg>
+    <faction-triangle :faction="faction"></faction-triangle>
     <strong>{{faction}}</strong> <span v-if="pushed === null">to move</span><span v-else>just moved</span>
   </p>
   <p id="pushedindicator" v-if="pushed !== null">
-    <svg viewBox="0 0 1 1">
-      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='stylePushed'></triangle>
-      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='stylePushedInner'></triangle>
-    </svg>
+    <faction-triangle :faction="pushed"></faction-triangle>
     <strong>{{pushed}}</strong> <span v-if="moving !==null">to choose where pushed piece goes</span><span v-else>will be pushed</span>
   </p>
   <p id="choosepushedindicator" v-if="pushed !== null && moving === null">
-    <svg viewBox="0 0 1 1">
-      <triangle :x="x" :y="y" :r="rOuter" :up="u" :style='style'></triangle>
-      <triangle :x="x" :y="y" :r="rInner" :up="u" :style='styleInner'></triangle>
-    </svg>
+    <faction-triangle :faction="faction"></faction-triangle>
     <strong>{{faction}}</strong> to choose which piece to push
   </p>
   <div id="crushedindicator" v-if="crushed.length">
@@ -31,13 +22,8 @@
 </template>
 
 <script>
-import Triangle from './Triangle'
-import colours from './Colours'
+import FactionTriangle from './FactionTriangle'
 import Piece from './Piece'
-
-var validator = function (value) {
-  return value === 'red' || value === 'green'
-}
 
 export default {
   data: function () {
@@ -49,42 +35,20 @@ export default {
       u: -1
     }
   },
-  computed: {
-    style: function () {
-      return {
-        fill: this.faction === 'red' ? colours.outer.red : colours.outer.green
-      }
-    },
-    styleInner: function () {
-      return {
-        fill: this.faction === 'red' ? colours.inner.red : colours.inner.green
-      }
-    },
-    stylePushed: function () {
-      return {
-        fill: this.pushed === 'red' ? colours.outer.red : colours.outer.green
-      }
-    },
-    stylePushedInner: function () {
-      return {
-        fill: this.pushed === 'red' ? colours.inner.red : colours.inner.green
-      }
-    }
-  },
   props: {
     faction: {
-      validator: validator
+      validator: (value) => { return ['red', 'green'].includes(value) }
     },
     pushed: {
       validator: function (value) {
-        return validator(value) || value === null
+        return (value) => { return ['red', 'green', null].includes(value) }
       }
     },
     moving: null,
     crushed: null
   },
   components: {
-    Triangle,
+    FactionTriangle,
     Piece
   }
 }
@@ -92,7 +56,6 @@ export default {
 
 <style>
 #indicator {
-  font-family: "Linux Biolinum", sans-serif;
   width: max-content;
   position: absolute;
   left: 48vmin;
