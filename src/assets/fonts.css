@@ -1,18 +1,12 @@
-/*Linux Libertine font*/
-
+/*Linux Libertine Display font*/
 @font-face {
-    font-family: 'Linux Libertine';
+    font-family: 'Linux Libertine Display';
     font-weight: normal;
     font-style: normal;
-    src: /*local("Linux Libertine"),*/ url("https://canmom.github.io/fonts/LinLibertine_R.woff") format("woff");
+    src: local("Linux Libertine Display"), url("/fonts/LinLibertine_DR.woff") format("woff");
 }
 
-@font-face {
-    font-family: 'Linux Libertine';
-    font-weight: bold;
-    font-style: normal;
-    src: local("Linux Libertine Bold"), url("/fonts/LinLibertine_RB.woff") format("woff");
-}
+/*Linux Biolinum font*/
 
 @font-face {
     font-family: 'Linux Biolinum';
