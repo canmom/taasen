@@ -45,7 +45,7 @@
 
 <script>
 import Tile from './Tile'
-import {tiles, tileRadius} from './Tiles'
+import {tiles, tileRadius, tileUnoccupied} from './Tiles'
 import Piece from './Piece'
 import DestinationOverlay from './DestinationOverlay'
 import PushedOverlay from './PushedOverlay'
@@ -59,6 +59,13 @@ class GamePiece {
     this.loc = {red: 'a1', green: 'a7', blue: 'd4'}[faction]
     this.starting = true
     this.state = faction !== 'green' ? 'selectable' : 'nonselectable'
+  }
+
+  destinations (pieces) {
+    return tiles[this.loc]
+      .a
+      .filter((tileLabel) => tileUnoccupied(tileLabel, pieces))
+      .map(label => tiles[label])
   }
 }
 
@@ -178,17 +185,6 @@ export default {
         this.nextTurn()
       }
     },
-    tileUnoccupied (tileLabel) {
-      return this.pieces.reduce(
-        (acc, piece) => acc && piece.loc !== tileLabel,
-        true)
-    },
-    findDestinations (tileLabel) {
-      this.destinations = tiles[tileLabel]
-        .a
-        .filter(this.tileUnoccupied)
-        .map(label => tiles[label])
-    },
     crushPiece (piece) {
       this.crushed.push(piece)
       this.pieces.splice(this.pieces.indexOf(piece), 1) // delete the piece from the pieces array
@@ -203,7 +199,7 @@ export default {
         this.resetMoving()
         this.moving = piece
         piece.state = 'selected'
-        this.findDestinations(piece.loc)
+        this.destinations = piece.destinations(this.pieces)
       } else if (piece.state === 'selected' && !this.toBePushed) {
         this.resetMoving()
         piece.state = 'selectable'

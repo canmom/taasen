@@ -4,6 +4,12 @@ const bY = 3.1           // y baseline
 const sX = 1             // x step
 const sY = -tileRadius * 1.5 // y step
 
+export function tileUnoccupied (tileLabel, pieces) {
+  return pieces.reduce(
+    (acc, piece) => acc && piece.loc !== tileLabel,
+    true)
+}
+
 export const tiles = {
   a1: {
     id: 'a1',
