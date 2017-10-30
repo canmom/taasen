@@ -20,13 +20,13 @@
       :r="tileRadius">
       </pushed-overlay>
     <destination-overlay
-      v-for="(dest,destLabel) in destinations"
+      v-for="dest in destinations"
       :x="dest.x"
       :y="dest.y"
       :up="dest.u"
       :r="tileRadius"
-      :key="destLabel"
-      v-on:move="movePiece(destLabel)">
+      :key="dest.id"
+      v-on:move="movePiece(dest.id)">
       </destination-overlay>
     <piece
       v-for='piece in pieces'
@@ -76,7 +76,7 @@ function generateBoard () {
     pieces,
     tileRadius,
     pieceRadius: 0.2 * tileRadius,
-    destinations: {},
+    destinations: [],
     moving: null,
     pushed: new Set(),
     toMove: 'red',
@@ -102,7 +102,7 @@ export default {
     },
     resetMoving () {
       this.moving = null
-      this.destinations = {}
+      this.destinations = []
     },
     determineSelectable (opposing) {
       for (const piece of this.pieces) {
@@ -178,14 +178,16 @@ export default {
         this.nextTurn()
       }
     },
-    showDestinations (tileLabel) {
-      for (const label of tiles[tileLabel].a) {
-        let unoccupied = true
-        for (const piece of this.pieces) {
-          unoccupied = unoccupied && piece.loc !== label
-        }
-        if (unoccupied) this.destinations[label] = tiles[label]
-      }
+    tileUnoccupied (tileLabel) {
+      return this.pieces.reduce(
+        (acc, piece) => acc && piece.loc !== tileLabel,
+        true)
+    },
+    findDestinations (tileLabel) {
+      this.destinations = tiles[tileLabel]
+        .a
+        .filter(this.tileUnoccupied)
+        .map(label => tiles[label])
     },
     crushPiece (piece) {
       this.crushed.push(piece)
@@ -201,13 +203,13 @@ export default {
         this.resetMoving()
         this.moving = piece
         piece.state = 'selected'
-        this.showDestinations(piece.loc)
+        this.findDestinations(piece.loc)
       } else if (piece.state === 'selected' && !this.toBePushed) {
         this.resetMoving()
         piece.state = 'selectable'
       }
 
-      if (this.toBePushed && Object.keys(this.destinations).length === 0) {
+      if (this.toBePushed && this.destinations.length === 0) {
         this.crushPiece(piece)
       }
     },
