@@ -145,6 +145,11 @@ export default {
         }
       }
     },
+    resolvePush () {
+      this.pushed.clear()
+      this.pushedPreviousTurn = this.moving
+      this.toBePushed = null
+    },
     movePiece (destination) {
       // called when a player chooses a destination to which to move a piece
       this.moving.loc = destination
@@ -152,9 +157,7 @@ export default {
       this.pushedPreviousTurn = null
 
       if (this.toBePushed) { // if we are moving to resolve a push
-        this.pushed.clear()
-        this.pushedPreviousTurn = this.moving
-        this.toBePushed = null
+        this.resolvePush()
       } else {
         if (this.moving.faction === 'blue') {
           this.bluePieceMovedPreviousTurn = this.moving
