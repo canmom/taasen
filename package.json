@@ -1,6 +1,6 @@
 {
   "name": "taasen",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A browser implementation of Jennifer Diane Reitz's board game Taasen.",
   "author": "canmom <bryn.dickinson@gmail.com>",
   "private": true,

@@ -12,7 +12,7 @@
 
 <script>
 import Triangle from './Triangle'
-import {tiles} from './Tiles'
+import {getTile} from './Tiles'
 import trianglePoints from './TrianglePoints'
 import states from './States'
 
@@ -54,16 +54,16 @@ export default {
     },
     x () {
       if (typeof this.loc === 'string') {
-        return tiles[this.loc].x + this.offset.x
+        return getTile(this.loc).x() + this.offset.x
       } else {
-        return this.loc.x
+        return this.loc.x()
       }
     },
     y () {
       if (typeof this.loc === 'string') {
-        return tiles[this.loc].y + this.offset.y
+        return getTile(this.loc).y() + this.offset.y
       } else {
-        return this.loc.y
+        return this.loc.y()
       }
     },
     elClass () {

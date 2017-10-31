@@ -3,30 +3,30 @@
   <move-indicator :faction="toMove" :pushed="toBePushed" :moving="moving" :crushed="crushed"></move-indicator>
   <svg class="board" viewBox="0 0 4 3.5">
     <tile
-      v-for="(tile,label) in tiles"
-      :x="tile.x"
-      :y="tile.y"
-      :up="tile.u"
+      v-for="tile in tiles"
+      :x="tile.x()"
+      :y="tile.y()"
+      :up="tile.up()"
       :r="tileRadius"
-      :key="label"
-      :t="tile.t">
+      :key="tile.id()"
+      :t="tile.terrain()">
       </tile>
     <pushed-overlay
       v-for="pushedPiece in Array.from(pushed.values())"
-      :x="tiles[pushedPiece.loc].x"
-      :y="tiles[pushedPiece.loc].y"
-      :up="tiles[pushedPiece.loc].u"
-      :key="pushedPiece.id"
+      :x="getTile(pushedPiece.loc).x()"
+      :y="getTile(pushedPiece.loc).y()"
+      :up="getTile(pushedPiece.loc).up()"
+      :key="getTile(pushedPiece.loc).id()"
       :r="tileRadius">
       </pushed-overlay>
     <destination-overlay
       v-for="dest in destinations"
-      :x="dest.x"
-      :y="dest.y"
-      :up="dest.u"
+      :x="dest.x()"
+      :y="dest.y()"
+      :up="dest.up()"
       :r="tileRadius"
-      :key="dest.id"
-      v-on:move="movePiece(dest.id)">
+      :key="dest.id()"
+      v-on:move="movePiece(dest.id())">
       </destination-overlay>
     <piece
       v-for='piece in pieces'
@@ -45,7 +45,7 @@
 
 <script>
 import Tile from './Tile'
-import {tiles, tileRadius, tileUnoccupied} from './Tiles'
+import {tiles, tileRadius, getTile} from './Tiles'
 import Piece from './Piece'
 import DestinationOverlay from './DestinationOverlay'
 import PushedOverlay from './PushedOverlay'
@@ -62,10 +62,10 @@ class GamePiece {
   }
 
   destinations (pieces) {
-    return tiles[this.loc]
-      .a
-      .filter((tileLabel) => tileUnoccupied(tileLabel, pieces))
-      .map(label => tiles[label])
+    return getTile(this.loc)
+      .adjacent()
+      .filter((tileLabel) => getTile(tileLabel).unoccupied(pieces))
+      .map(label => getTile(label))
   }
 }
 
@@ -134,7 +134,7 @@ export default {
 
       const pushedPieceType = {thaum: 'sciane', sciane: 'paupil', paupil: 'thaum'}[this.moving.piece]
 
-      for (const label of tiles[destination].p || tiles[destination].a) {
+      for (const label of getTile(destination).pushes()) {
         for (const piece of this.pieces) {
           if (piece.loc === label && piece.piece === pushedPieceType && piece.faction !== this.toMove && piece.faction !== this.moving.faction) {
             this.pushed.add(piece)
@@ -220,7 +220,8 @@ export default {
     },
     resetBoard (faction) {
       Object.assign(this.$data, generateBoard())
-    }
+    },
+    getTile
   }
 }
 </script>
