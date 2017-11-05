@@ -197,6 +197,7 @@ export default {
       // called when a player clicks on a piece
       if (piece.state === 'pushed' || piece.state === 'selectable') {
         this.resetMoving()
+        this.determineSelectable(this.opposingSide())
         this.moving = piece
         piece.state = 'selected'
         this.destinations = piece.destinations(this.pieces)
